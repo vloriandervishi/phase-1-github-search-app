@@ -23,7 +23,7 @@ function gitUsers(user) {
       .then((response) => response.json())
       .then((repo) => console.log(repo));
   }
-  getRepo();
+  setTimeout(getRepo(), 5000);
 }
 
 document.addEventListener("DOMContentLoaded", () => {
