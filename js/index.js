@@ -21,7 +21,13 @@ function gitUsers(user) {
   function getRepo() {
     fetch(`https://api.github.com/users/${user}/repos`)
       .then((response) => response.json())
-      .then((repo) => console.log(repo));
+      .then((repo) => {
+        // const repoList = Object.create(repo);
+        for (let props in repo) {
+          console.log(repo[props].full_name);
+        }
+      })
+      .catch((error) => console.log(error.message));
   }
   setTimeout(getRepo(), 5000);
 }
