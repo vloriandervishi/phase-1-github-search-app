@@ -24,12 +24,15 @@ function gitUsers(user) {
       .then((repo) => {
         // const repoList = Object.create(repo);
         for (let props in repo) {
-          console.log(repo[props].full_name);
+          const repoListEl = document.getElementById("repos-list");
+          const repoliEl = document.createElement("li");
+          repoliEl.textContent = repo[props].full_name;
+          repoListEl.append(repoliEl);
         }
       })
       .catch((error) => console.log(error.message));
   }
-  setTimeout(getRepo(), 5000);
+  setTimeout(getRepo(), 1000);
 }
 
 document.addEventListener("DOMContentLoaded", () => {
