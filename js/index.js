@@ -18,6 +18,12 @@ function gitUsers(user) {
       });
     })
     .catch((error) => console.log(error.message));
+  function getRepo() {
+    fetch(`https://api.github.com/users/${user}/repos`)
+      .then((response) => response.json())
+      .then((repo) => console.log(repo));
+  }
+  getRepo();
 }
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -27,6 +33,8 @@ document.addEventListener("DOMContentLoaded", () => {
     e.preventDefault();
     // console.log(getUserEl.search.value);
     const findUser = getUserEl.search.value;
-    gitUsers(findUser);
+
+    let trimeedfindUser = findUser.split(" ").join("");
+    gitUsers(trimeedfindUser);
   });
 });
