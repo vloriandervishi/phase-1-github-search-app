@@ -18,26 +18,11 @@ function gitUsers(user) {
       });
     })
     .catch((error) => console.log(error.message));
-  function getRepo() {
-    fetch(`https://api.github.com/users/${user}/repos`)
-      .then((response) => response.json())
-      .then((repo) => {
-        // const repoList = Object.create(repo);
-        for (let props in repo) {
-          const repoListEl = document.getElementById("repos-list");
-          const repoliEl = document.createElement("li");
-          repoliEl.textContent = repo[props].full_name;
-          repoListEl.append(repoliEl);
-        }
-      })
-      .catch((error) => console.log(error.message));
-  }
-  setTimeout(getRepo(), 1000);
 }
 
 document.addEventListener("DOMContentLoaded", () => {
   const getUserEl = document.getElementById("github-form");
-
+  const userContainer = document.getElementById("github-container");
   getUserEl.addEventListener("submit", (e) => {
     e.preventDefault();
     // console.log(getUserEl.search.value);
@@ -45,5 +30,28 @@ document.addEventListener("DOMContentLoaded", () => {
 
     let trimeedfindUser = findUser.split(" ").join("");
     gitUsers(trimeedfindUser);
+  });
+  userContainer.addEventListener("click", (e) => {
+    const user = document.getElementById("github-form");
+    let targetUSer = user.search.value;
+    let processedUserName = targetUSer.split(" ").join("");
+
+    function getRepo(user) {
+      fetch(`https://api.github.com/users/${user}/repos`)
+        .then((response) => response.json())
+        .then((repo) => {
+          // const repoList = Object.create(repo);
+          for (let props in repo) {
+            const repoListEl = document.getElementById("repos-list");
+
+            const repoliEl = document.createElement("li");
+            repoliEl.innerHTML = "";
+            repoliEl.textContent = repo[props].full_name;
+            repoListEl.append(repoliEl);
+          }
+        })
+        .catch((error) => console.log(error.message));
+    }
+    getRepo(processedUserName);
   });
 });
